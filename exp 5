@@ -1,0 +1,51 @@
+mongod
+mongosh
+// Show all existing databases
+show databases
+
+// Create / Switch to a database
+use collegeDB
+
+// Show current database
+db
+
+// Create a collection
+db.createCollection("students")
+
+// Show all collections in the database
+show collections
+
+// Insert documents into collection
+db.students.insertMany([
+  { rollno: 1, name: "Amit", dept: "CSE" },
+  { rollno: 2, name: "Neha", dept: "ECE" },
+  { rollno: 3, name: "Rahul", dept: "MECH" }
+])
+
+// Display all documents
+db.students.find()
+
+// Display documents in formatted form
+db.students.find().pretty()
+
+// Rename collection
+db.students.renameCollection("student_details")
+
+// Show collections after renaming
+show collections
+
+// Count documents in collection
+db.student_details.countDocuments()
+
+// Drop a collection
+db.student_details.drop()
+
+// Show collections after dropping
+show collections
+
+// Drop the database
+use collegeDB
+db.dropDatabase()
+
+// Show databases after dropping
+show databases
