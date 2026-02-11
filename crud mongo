@@ -1,0 +1,97 @@
+mongosh
+// ===============================
+// USE / CREATE DATABASE
+// ===============================
+use studentDB
+
+// Drop collection for fresh execution
+db.students.drop()
+
+// ===============================
+// CREATE (INSERT OPERATION)
+// ===============================
+db.students.insertMany([
+  { sid: 101, name: "Arjun", dept: "CSE", marks: 85 },
+  { sid: 102, name: "Meena", dept: "ECE", marks: 78 },
+  { sid: 103, name: "Ravi", dept: "EEE", marks: 92 },
+  { sid: 104, name: "Anita", dept: "CSE", marks: 88 },
+  { sid: 105, name: "Rahul", dept: "MECH", marks: 70 }
+])
+
+// ===============================
+// READ OPERATIONS
+// ===============================
+
+// Display all records
+db.students.find()
+
+// Display records in formatted form
+db.students.find().pretty()
+
+// Find students from CSE department
+db.students.find({ dept: "CSE" })
+
+// Find students with marks greater than 80
+db.students.find({ marks: { $gt: 80 } })
+
+// Find a single document
+db.students.findOne({ sid: 101 })
+
+// ===============================
+// UPDATE OPERATIONS
+// ===============================
+
+// Update marks of one student
+db.students.updateOne(
+  { sid: 102 },
+  { $set: { marks: 82 } }
+)
+
+// Update department of multiple students
+db.students.updateMany(
+  { dept: "CSE" },
+  { $set: { dept: "Computer Science" } }
+)
+
+// Increment marks
+db.students.updateOne(
+  { sid: 105 },
+  { $inc: { marks: 5 } }
+)
+
+// ===============================
+// DELETE OPERATIONS
+// ===============================
+
+// Delete one student record
+db.students.deleteOne({ sid: 103 })
+
+// Delete students with marks less than 75
+db.students.deleteMany({ marks: { $lt: 75 } })
+
+// ===============================
+// ADDITIONAL OPERATIONS
+// ===============================
+
+// Count total documents
+db.students.countDocuments()
+
+// Sort records by marks (ascending)
+db.students.find().sort({ marks: 1 })
+
+// Sort records by marks (descending)
+db.students.find().sort({ marks: -1 })
+
+// Limit records
+db.students.find().limit(2)
+
+// Skip records
+db.students.find().skip(1)
+
+// Skip and limit together
+db.students.find().skip(1).limit(2)
+
+// ===============================
+// FINAL DISPLAY
+// ===============================
+db.students.find().pretty()
