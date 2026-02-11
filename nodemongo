@@ -1,0 +1,98 @@
+const express = require("express");
+const mongoose = require("mongoose");
+
+const app = express();
+app.use(express.json());
+
+// 1️⃣ Connect to MongoDB
+mongoose.connect("mongodb://127.0.0.1:27017/collegeDB", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+console.log("MongoDB Connected");
+
+// 2️⃣ Create Schema
+const studentSchema = new mongoose.Schema({
+  rollno: Number,
+  name: String,
+  branch: String,
+  age: Number,
+  marks: Number
+});
+
+// 3️⃣ Create Model (Collection)
+const Student = mongoose.model("Student", studentSchema);
+
+// ---------------- ROUTES ----------------
+
+// ➕ INSERT ONE
+app.post("/add", async (req, res) => {
+  const student = new Student(req.body);
+  await student.save();
+  res.send("Student added successfully");
+});
+
+// ➕ INSERT MANY
+app.post("/addmany", async (req, res) => {
+  await Student.insertMany(req.body);
+  res.send("Multiple students added");
+});
+
+// 📖 READ ALL
+app.get("/students", async (req, res) => {
+  const data = await Student.find();
+  res.json(data);
+});
+
+// 📖 READ ONE
+app.get("/student/:rollno", async (req, res) => {
+  const data = await Student.findOne({ rollno: req.params.rollno });
+  res.json(data);
+});
+
+// ✏ UPDATE
+app.put("/update/:rollno", async (req, res) => {
+  await Student.updateOne(
+    { rollno: req.params.rollno },
+    { $set: req.body }
+  );
+  res.send("Student updated");
+});
+
+// ❌ DELETE ONE
+app.delete("/delete/:rollno", async (req, res) => {
+  await Student.deleteOne({ rollno: req.params.rollno });
+  res.send("Student deleted");
+});
+
+// ❌ DELETE ALL
+app.delete("/deleteall", async (req, res) => {
+  await Student.deleteMany({});
+  res.send("All students deleted");
+});
+
+// ▶ START SERVER
+app.listen(3000, () => {
+  console.log("Server running on http://localhost:3000");
+});
+
+
+
+
+mongod
+npm install express mongoose
+node app.js
+{
+  "rollno": 101,
+  "name": "Lahari",
+  "branch": "CSE",
+  "age": 20,
+  "marks": 85
+}
+GET http://localhost:3000/students
+PUT http://localhost:3000/update/101
+
+{
+  "marks": 90
+}
