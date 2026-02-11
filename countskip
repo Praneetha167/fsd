@@ -1,0 +1,55 @@
+// Use / Create database
+use collegeDB
+
+// Drop collection if exists
+db.students.drop()
+
+// Insert sample documents
+db.students.insertMany([
+  { rollno: 1, name: "Amit", dept: "CSE", marks: 85 },
+  { rollno: 2, name: "Neha", dept: "ECE", marks: 78 },
+  { rollno: 3, name: "Rahul", dept: "MECH", marks: 90 },
+  { rollno: 4, name: "Sneha", dept: "CSE", marks: 88 },
+  { rollno: 5, name: "Karan", dept: "EEE", marks: 72 }
+])
+
+// ===============================
+// COUNT OPERATION
+// ===============================
+
+// Count total documents
+db.students.countDocuments()
+
+// Count students from CSE department
+db.students.countDocuments({ dept: "CSE" })
+
+// ===============================
+// SORT OPERATION
+// ===============================
+
+// Sort by marks (ascending)
+db.students.find().sort({ marks: 1 })
+
+// Sort by marks (descending)
+db.students.find().sort({ marks: -1 })
+
+// ===============================
+// LIMIT OPERATION
+// ===============================
+
+// Display first 3 documents
+db.students.find().limit(3)
+
+// ===============================
+// SKIP OPERATION
+// ===============================
+
+// Skip first 2 documents
+db.students.find().skip(2)
+
+// ===============================
+// SKIP + LIMIT
+// ===============================
+
+// Skip first 1 and show next 2 documents
+db.students.find().skip(1).limit(2)
