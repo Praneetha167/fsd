@@ -1,0 +1,89 @@
+npm init -y
+npm install express cors
+node server.js
+
+
+server.js
+
+const express = require('express');
+const app = express();
+const cors = require('cors');
+
+app.use(express.json());
+app.use(cors());
+
+// store data
+let students = [];
+
+// get students
+app.get('/students', (req, res) => {
+  res.json(students);
+});
+
+// add student
+app.post('/students', (req, res) => {
+  students.push(req.body);
+  res.json({ message: "Student added" });
+});
+
+app.listen(3000, () => console.log("Server running on http://localhost:3000"));
+
+
+
+index.html
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <title>Student App</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+</head>
+<body ng-controller="myCtrl">
+
+  <h2>Add Student</h2>
+
+  Name: <input ng-model="name"><br><br>
+  Age: <input type="number" ng-model="age"><br><br>
+
+  <button ng-click="addStudent()">Add</button>
+
+  <h3>Student List</h3>
+  <ul>
+    <li ng-repeat="s in students">
+      {{s.name}} - {{s.age}}
+    </li>
+  </ul>
+
+  <script>
+    angular.module("myApp", [])
+    .controller("myCtrl", function($scope, $http) {
+
+      // load students
+      $http.get("http://localhost:3000/students")
+        .then(function(res) {
+          $scope.students = res.data;
+        });
+
+      // add student
+      $scope.addStudent = function() {
+        $http.post("http://localhost:3000/students", {
+          name: $scope.name,
+          age: $scope.age
+        }).then(function() {
+          // reload list
+          return $http.get("http://localhost:3000/students");
+        }).then(function(res) {
+          $scope.students = res.data;
+        });
+      };
+
+    });
+  </script>
+
+</body>
+</html>
+
+
+node server.js
+
+open index.html live server
