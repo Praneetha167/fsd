@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <meta charset="UTF-8">
+  <title>AngularJS Form Example</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+  <style>
+    .valid { border: 2px solid green; }
+    .invalid { border: 2px solid red; }
+    .highlight { background-color: yellow; }
+  </style>
+</head>
+<body ng-controller="FormController">
+
+  <form name="myForm">
+    <label>Name:</label>
+    <input type="text" name="username" ng-model="user.name" 
+           ng-class="{'valid': myForm.username.$valid, 'invalid': myForm.username.$invalid}" 
+           ng-focus="highlight=true" ng-blur="highlight=false"
+           required>
+    <br><br>
+
+    <label>Email:</label>
+    <input type="email" name="email" ng-model="user.email" 
+           ng-class="{'valid': myForm.email.$valid, 'invalid': myForm.email.$invalid}" 
+           required>
+    <br><br>
+
+    <button type="button" ng-click="submitForm()" ng-class="{'highlight': highlight}">
+      Submit
+    </button>
+  </form>
+
+  <p ng-if="message">{{message}}</p>
+
+  <script>
+    angular.module('myApp', [])
+      .controller('FormController', ['$scope', function($scope) {
+        $scope.user = {};
+        $scope.highlight = false;
+        $scope.submitForm = function() {
+          if ($scope.myForm.$valid) {
+            $scope.message = "Form submitted successfully!";
+          } else {
+            $scope.message = "Please fill the form correctly.";
+          }
+        };
+      }]);
+  </script>
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <meta charset="UTF-8">
+  <title>AngularJS Simple Form</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+    }
+    form {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+    .valid {
+      border-color: green;
+    }
+    .invalid {
+      border-color: red;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .highlight {
+      background-color: #ffeb3b !important;
+    }
+    p {
+      font-weight: bold;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body ng-controller="FormController">
+
+  <form name="myForm">
+    <label>Name:</label>
+    <input type="text" name="username" ng-model="user.name"
+           ng-class="{'valid': myForm.username.$valid, 'invalid': myForm.username.$invalid}"
+           ng-focus="highlight=true" ng-blur="highlight=false"
+           required>
+    
+    <label>Email:</label>
+    <input type="email" name="email" ng-model="user.email"
+           ng-class="{'valid': myForm.email.$valid, 'invalid': myForm.email.$invalid}"
+           required>
+    
+    <button type="button" ng-click="submitForm()" ng-class="{'highlight': highlight}">
+      Submit
+    </button>
+  </form>
+
+  <p ng-if="message">{{message}}</p>
+
+  <script>
+    angular.module('myApp', [])
+      .controller('FormController', ['$scope', function($scope) {
+        $scope.user = {};
+        $scope.highlight = false;
+        $scope.submitForm = function() {
+          if ($scope.myForm.$valid) {
+            $scope.message = "Form submitted successfully!";
+          } else {
+            $scope.message = "Please fill the form correctly.";
+          }
+        };
+      }]);
+  </script>
+
+</body>
+</html>
