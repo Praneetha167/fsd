@@ -1,0 +1,35 @@
+import React, { useState } from "react";
+
+function App() {
+  const [num1, setNum1] = useState(0);
+  const [num2, setNum2] = useState(0);
+  const [result, setResult] = useState(0);
+
+  return (
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h2>Simple Calculator</h2>
+
+      <input type="number" onChange={(e) => setNum1(Number(e.target.value))} />
+      <br /><br />
+      <input type="number" onChange={(e) => setNum2(Number(e.target.value))} />
+      <br /><br />
+
+      <button onClick={() => setResult(num1 + num2)}>Add</button>
+      <button onClick={() => setResult(num1 - num2)}>Sub</button>
+      <button onClick={() => setResult(num1 * num2)}>Mul</button>
+      <button onClick={() => setResult(num1 / num2)}>Div</button>
+
+      <h3>Result: {result}</h3>
+    </div>
+  );
+}
+
+export default App;
+
+
+Create React app:
+npx create-react-app calculator
+cd calculator
+Replace code inside src/App.js with above code
+Run:
+npm start
