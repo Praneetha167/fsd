@@ -33,3 +33,165 @@ cd calculator
 Replace code inside src/App.js with above code
 Run:
 npm start
+
+
+
+-----------------------------------------------------------------------------------------------
+
+npx create-react-app calculator
+cd calculator
+npm start
+
+//App.js
+
+import React from "react";
+import CalculatorIndividual from "./CalculatorIndividual";
+
+function App() {
+  return (
+    <div>
+      <CalculatorIndividual />
+    </div>
+  );
+}
+
+export default App;
+
+
+//CalculatorIndividual.js
+
+import React, { useState } from "react";
+import "./CalculatorIndividual.css";
+
+const CalculatorIndividual = () => {
+  const [input, setInput] = useState("");
+
+  const append = (value) => {
+    setInput(input + value);
+  };
+
+  const clearInput = () => {
+    setInput("");
+  };
+
+  const calculate = () => {
+    try {
+      setInput(eval(input).toString());
+    } catch {
+      setInput("Error");
+    }
+  };
+
+  const sqrt = () => {
+    try {
+      setInput(Math.sqrt(eval(input)).toString());
+    } catch {
+      setInput("Error");
+    }
+  };
+
+  const log = () => {
+    try {
+      setInput(Math.log10(eval(input)).toString());
+    } catch {
+      setInput("Error");
+    }
+  };
+
+  const cube = () => {
+    try {
+      setInput(Math.pow(eval(input), 3).toString());
+    } catch {
+      setInput("Error");
+    }
+  };
+
+  return (
+    <div className="calculator">
+      <div className="display">
+        {input || "0"}
+      </div>
+
+      <div className="buttons">
+        <button onClick={() => append("7")}>7</button>
+        <button onClick={() => append("8")}>8</button>
+        <button onClick={() => append("9")}>9</button>
+        <button onClick={() => append("/")}>/</button>
+
+        <button onClick={() => append("4")}>4</button>
+        <button onClick={() => append("5")}>5</button>
+        <button onClick={() => append("6")}>6</button>
+        <button onClick={() => append("*")}>*</button>
+
+        <button onClick={() => append("1")}>1</button>
+        <button onClick={() => append("2")}>2</button>
+        <button onClick={() => append("3")}>3</button>
+        <button onClick={() => append("-")}>-</button>
+
+        <button onClick={() => append("0")}>0</button>
+        <button onClick={() => append(".")}>.</button>
+        <button onClick={calculate}>=</button>
+        <button onClick={() => append("+")}>+</button>
+
+        <button onClick={sqrt}>√</button>
+        <button onClick={log}>log</button>
+        <button onClick={cube}>x³</button>
+
+        <button className="clear" onClick={clearInput}>
+          C
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default CalculatorIndividual;
+
+
+//CalculatorIndividual.css
+
+.calculator {
+  width: 260px;
+  margin: 50px auto;
+  border: 2px solid #333;
+  border-radius: 10px;
+  padding: 10px;
+  font-family: Arial, sans-serif;
+}
+
+.display {
+  width: 100%;
+  height: 40px;
+  background: #eee;
+  text-align: right;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  font-size: 20px;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+}
+
+button {
+  padding: 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  background: #ddd;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #ccc;
+}
+
+button.clear {
+  grid-column: span 4;
+  background: #f44336;
+  color: white;
+}
