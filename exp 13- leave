@@ -1,0 +1,132 @@
+App.js
+
+import React, { useState } from "react";
+
+function App() {
+  const [leaves, setLeaves] = useState({
+    casual: 10,
+    medical: 8,
+  });
+
+  const applyLeave = (type) => {
+    if (leaves[type] > 0) {
+      setLeaves({
+        ...leaves,
+        [type]: leaves[type] - 1,
+      });
+    } else {
+      alert("No leaves left!");
+    }
+  };
+
+  return (
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h1>Leave Management System</h1>
+
+      <div>
+        <h2>Casual Leave: {leaves.casual}</h2>
+        <button onClick={() => applyLeave("casual")}>
+          Apply Casual Leave
+        </button>
+      </div>
+
+      <div style={{ marginTop: "20px" }}>
+        <h2>Medical Leave: {leaves.medical}</h2>
+        <button onClick={() => applyLeave("medical")}>
+          Apply Medical Leave
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default App;
+
+npx create-react-app leave-app
+cd leave-app
+npm start
+
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------
+
+
+
+npx create-react-app leave-app
+cd leave-app
+npm start
+
+
+//App.js in src
+
+import React, { useState } from "react";
+
+export default function App() {
+  const [balance, setBalance] = useState({
+    casual: 10,
+    medical: 8
+  });
+
+  const [type, setType] = useState("casual");
+  const [days, setDays] = useState(1);
+  const [history, setHistory] = useState([]);
+
+  const applyLeave = () => {
+    if (days <= 0) return;
+
+    if (balance[type] >= days) {
+      setBalance({
+        ...balance,
+        [type]: balance[type] - days
+      });
+
+      setHistory([
+        ...history,
+        { type, days }
+      ]);
+    } else {
+      alert("Not enough leave balance!");
+    }
+  };
+
+  return (
+    <div style={{ textAlign: "center", padding: "20px" }}>
+      <h1>Leave Management System</h1>
+
+      <h2>Available Leaves</h2>
+      <p>Casual: {balance.casual} days</p>
+      <p>Medical: {balance.medical} days</p>
+
+      <h2>Apply Leave</h2>
+      <select onChange={(e) => setType(e.target.value)}>
+        <option value="casual">Casual Leave</option>
+        <option value="medical">Medical Leave</option>
+      </select>
+
+      <input
+        type="number"
+        value={days}
+        min="1"
+        onChange={(e) => setDays(Number(e.target.value))}
+      />
+
+      <button onClick={applyLeave}>Apply</button>
+
+      <h2>Leave History</h2>
+      {history.map((h, i) => (
+        <p key={i}>
+          {h.type} leave - {h.days} days
+        </p>
+      ))}
+    </div>
+  );
+}
