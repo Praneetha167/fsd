@@ -99,3 +99,103 @@ npx create-react-app music-store
 cd music-store
 npm install react-router-dom
 npm start
+
+
+
+
+
+
+----------------------------------------------------
+npx create-react-app music-store
+cd music-store
+npm install react-router-dom
+npm start
+
+
+//App.js
+
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Home from "./Home";
+import Songs from "./Songs";
+import Cart from "./Cart";
+
+export default function App() {
+  const [cart, setCart] = useState([]);
+
+  return (
+    <Router>
+      <nav style={{ display: "flex", gap: "10px" }}>
+        <Link to="/">Home</Link>
+        <Link to="/songs">Songs</Link>
+        <Link to="/cart">Cart ({cart.length})</Link>
+      </nav>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/songs" element={<Songs cart={cart} setCart={setCart} />} />
+        <Route path="/cart" element={<Cart cart={cart} />} />
+      </Routes>
+    </Router>
+  );
+}
+
+
+//Home.js
+
+import React from "react";
+
+export default function Home() {
+  return (
+    <div style={{ textAlign: "center" }}>
+      <h1>Welcome to Music Store 🎵</h1>
+      <p>Browse and add your favorite songs to cart</p>
+    </div>
+  );
+}
+
+//Songs.js
+
+import React from "react";
+
+export default function Songs({ cart, setCart }) {
+  const songs = ["Song A", "Song B", "Song C"];
+
+  const addToCart = (song) => {
+    setCart([...cart, song]);
+  };
+
+  return (
+    <div style={{ textAlign: "center" }}>
+      <h2>Available Songs</h2>
+
+      {songs.map((s, i) => (
+        <div key={i}>
+          <span>{s}</span>
+          <button onClick={() => addToCart(s)}>Add</button>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+
+//Cart.js
+
+import React from "react";
+
+export default function Cart({ cart }) {
+  return (
+    <div style={{ textAlign: "center" }}>
+      <h2>Your Cart</h2>
+
+      {cart.length === 0 ? (
+        <p>No items in cart</p>
+      ) : (
+        cart.map((item, i) => <p key={i}>{item}</p>)
+      )}
+    </div>
+  );
+}
+
+
