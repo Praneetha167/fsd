@@ -1,0 +1,40 @@
+
+App.js
+import React, { useState } from "react";
+
+function App() {
+  const [votes, setVotes] = useState({
+    OptionA: 0,
+    OptionB: 0,
+  });
+
+  const vote = (option) => {
+    setVotes({
+      ...votes,
+      [option]: votes[option] + 1,
+    });
+  };
+
+  return (
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h1>Voting App</h1>
+
+      <div>
+        <h2>Option A: {votes.OptionA}</h2>
+        <button onClick={() => vote("OptionA")}>Vote A</button>
+      </div>
+
+      <div style={{ marginTop: "20px" }}>
+        <h2>Option B: {votes.OptionB}</h2>
+        <button onClick={() => vote("OptionB")}>Vote B</button>
+      </div>
+    </div>
+  );
+}
+
+export default App;
+
+
+  npx create-react-app voting-app
+cd voting-app
+  npm start
