@@ -1,9 +1,12 @@
+//employees.json
 [
   {"name": "John", "position": "Developer"},
   {"name": "Anna", "position": "Designer"}
 ]
 
 
+
+//index.html
 <!DOCTYPE html>
 <html ng-app="myApp">
 <head>
