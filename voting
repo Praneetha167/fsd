@@ -38,3 +38,77 @@ export default App;
   npx create-react-app voting-app
 cd voting-app
   npm start
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------
+
+
+npx create-react-app voting-app
+cd voting-app
+npm start
+
+//App.js in src file
+
+import React, { useState } from "react";
+
+export default function App() {
+  const [candidates, setCandidates] = useState(["Alice", "Bob"]);
+  const [votes, setVotes] = useState({ Alice: 0, Bob: 0 });
+  const [newName, setNewName] = useState("");
+
+  const addCandidate = () => {
+    if (newName && !votes[newName]) {
+      setCandidates([...candidates, newName]);
+      setVotes({ ...votes, [newName]: 0 });
+      setNewName("");
+    }
+  };
+
+  const vote = (name) => {
+    setVotes({ ...votes, [name]: votes[name] + 1 });
+  };
+
+  const getWinner = () => {
+    let max = -1, winner = "";
+    for (let c of candidates) {
+      if (votes[c] > max) {
+        max = votes[c];
+        winner = c;
+      }
+    }
+    return winner;
+  };
+
+  return (
+    <div style={{ textAlign: "center", padding: "20px" }}>
+      <h1>Voting App</h1>
+
+      <input
+        value={newName}
+        onChange={(e) => setNewName(e.target.value)}
+        placeholder="Enter candidate"
+      />
+      <button onClick={addCandidate}>Add</button>
+
+      <h2>Candidates</h2>
+      {candidates.map((c) => (
+        <div key={c}>
+          <span>{c} - Votes: {votes[c]}</span>
+          <button onClick={() => vote(c)}>Vote</button>
+        </div>
+      ))}
+
+      <h2>Winner: {getWinner()}</h2>
+    </div>
+  );
+}
+
