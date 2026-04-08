@@ -1,0 +1,101 @@
+npm install react-router-dom
+
+index.js
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { BrowserRouter } from "react-router-dom";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
+
+App.js
+import React from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import Home from "./Home";
+import Store from "./Store";
+import About from "./About";
+
+function App() {
+  return (
+    <div>
+      <nav style={{ textAlign: "center", margin: "20px" }}>
+        <Link to="/" style={{ margin: "10px" }}>Home</Link>
+        <Link to="/store" style={{ margin: "10px" }}>Store</Link>
+        <Link to="/about" style={{ margin: "10px" }}>About</Link>
+      </nav>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/store" element={<Store />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </div>
+  );
+}
+
+export default App;
+
+Home.js
+import React from "react";
+
+function Home() {
+  return (
+    <div style={{ textAlign: "center" }}>
+      <h1>Welcome to Music Store</h1>
+      <p>Find your favorite albums and songs!</p>
+    </div>
+  );
+}
+
+export default Home;
+
+Store.js
+import React from "react";
+
+const musicList = [
+  { id: 1, name: "Song A", artist: "Artist 1" },
+  { id: 2, name: "Song B", artist: "Artist 2" },
+  { id: 3, name: "Song C", artist: "Artist 3" },
+];
+
+function Store() {
+  return (
+    <div style={{ textAlign: "center" }}>
+      <h1>Music Store</h1>
+      <ul>
+        {musicList.map((music) => (
+          <li key={music.id}>
+            {music.name} - {music.artist}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default Store;
+
+About.js
+import React from "react";
+
+function About() {
+  return (
+    <div style={{ textAlign: "center" }}>
+      <h1>About Us</h1>
+      <p>We provide the best collection of music for all genres.</p>
+    </div>
+  );
+}
+
+export default About;
+
+
+npx create-react-app music-store
+cd music-store
+npm install react-router-dom
+npm start
