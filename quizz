@@ -48,3 +48,112 @@ function askQuestion() {
 
 // Start quiz
 askQuestion();
+
+
+
+
+
+const readline = require('readline');
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+let score = 0;
+let index = 0;
+
+// Questions with options
+const questions = [
+    {
+        q: "1. What is 2 + 2?",
+        options: ["A) 3", "B) 4", "C) 5", "D) 6"],
+        ans: "b"
+    },
+    {
+        q: "2. Capital of India?",
+        options: ["A) Mumbai", "B) Chennai", "C) Delhi", "D) Kolkata"],
+        ans: "c"
+    },
+    {
+        q: "3. Node.js is?",
+        options: ["A) Language", "B) Runtime", "C) Database", "D) OS"],
+        ans: "b"
+    }
+];
+
+let userAnswers = [];
+
+// Ask questions with timer
+function askQuestion() {
+    if (index < questions.length) {
+        let q = questions[index];
+
+        console.log("\n" + q.q);
+        q.options.forEach(opt => console.log(opt));
+
+        let answered = false;
+
+        // Timer (10 seconds)
+        const timer = setTimeout(() => {
+            if (!answered) {
+                console.log("\nTime's up!");
+                userAnswers.push("No Answer");
+                index++;
+                askQuestion();
+            }
+        }, 10000);
+
+        rl.question("Enter option (A/B/C/D): ", (answer) => {
+            answered = true;
+            clearTimeout(timer);
+
+            answer = answer.toLowerCase();
+
+            if (["a","b","c","d"].includes(answer)) {
+                userAnswers.push(answer.toUpperCase());
+
+                if (answer === q.ans) {
+                    console.log("Correct!");
+                    score++;
+                } else {
+                    console.log("Wrong!");
+                }
+            } else {
+                console.log("Invalid input!");
+                userAnswers.push("Invalid");
+            }
+
+            index++;
+            askQuestion();
+        });
+
+    } else {
+        showResult();
+    }
+}
+
+// Show result
+function showResult() {
+    console.log("\n===== QUIZ RESULT =====");
+    console.log("Score:", score, "/", questions.length);
+
+    // Performance feedback
+    if (score === questions.length)
+        console.log("Excellent!");
+    else if (score >= 2)
+        console.log("Good Job!");
+    else
+        console.log("Need Improvement!");
+
+    // Show correct answers
+    console.log("\nCorrect Answers:");
+    questions.forEach((q, i) => {
+        console.log(`Q${i+1}: ${q.ans.toUpperCase()}`);
+    });
+
+    rl.close();
+}
+
+// Start quiz
+askQuestion();
