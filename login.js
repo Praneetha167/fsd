@@ -1,3 +1,16 @@
+node -v
+npm -v
+
+server.js
+npm init -y
+npm install express
+node server.js
+
+
+
+
+
+
 const express = require("express");
 const app = express();
 const PORT = 3000;
