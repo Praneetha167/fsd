@@ -1,0 +1,50 @@
+const readline = require('readline');
+
+// Create interface
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+let score = 0;
+
+// Questions
+const questions = [
+    {
+        q: "1. What is 2 + 2? ",
+        ans: "4"
+    },
+    {
+        q: "2. Capital of India? ",
+        ans: "delhi"
+    },
+    {
+        q: "3. Node.js is (js/runtime)? ",
+        ans: "runtime"
+    }
+];
+
+let index = 0;
+
+// Ask questions
+function askQuestion() {
+    if (index < questions.length) {
+        rl.question(questions[index].q, (answer) => {
+            if (answer.toLowerCase() === questions[index].ans) {
+                console.log("Correct!\n");
+                score++;
+            } else {
+                console.log("Wrong!\n");
+            }
+            index++;
+            askQuestion();
+        });
+    } else {
+        console.log("Quiz Finished!");
+        console.log("Your Score:", score, "/", questions.length);
+        rl.close();
+    }
+}
+
+// Start quiz
+askQuestion();
